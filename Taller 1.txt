@@ -1,0 +1,92 @@
+
+##########################          
+######## TALLER 1 ########
+##########################
+
+
+
+void setup(){
+
+  //configurar pin 13
+  pinMode(13,OUTPUT);
+  pinMode(12,OUTPUT);
+  pinMode(11,OUTPUT);
+  
+  //activar puerto serial
+  Serial.begin(9600);//baudios unidad de medida
+  Serial.println("menu");
+    Serial.println(" 1 on");
+    Serial.println(" 2 off");
+    Serial.println("selecciona op");
+}
+
+void loop(){
+
+  //Console.log("hola");
+  //System.out.println("hola");
+  //echo "helo";
+  //put"hola";
+  
+  //Serial.print("hello");
+  //Serial.println
+  
+  if(Serial.available() > 0){
+  	
+    char opt= Serial.read();
+    
+    if(opt=='1'){
+      digitalWrite(11,HIGH);
+  		
+    }else if(opt=='2'){
+      digitalWrite(11,LOW);
+      
+    }else if(opt=='3'){
+      digitalWrite(12,HIGH);
+      
+    }else if(opt=='4'){
+      digitalWrite(12,LOW);
+      
+    }else if(opt=='5'){
+      digitalWrite(13,HIGH);
+      
+    }else if(opt=='6'){
+      digitalWrite(13,LOW);
+      
+    }else if(opt=='7'){
+      digitalWrite(13,HIGH);
+      digitalWrite(12,HIGH);
+      digitalWrite(11,HIGH);
+      
+    }else if(opt=='8'){
+      digitalWrite(12,LOW);
+      digitalWrite(13,LOW);
+      digitalWrite(11,LOW);
+      
+    }else if(opt=='9'){
+  for(int i = 0; i < 3; i++){ 
+    digitalWrite(13,HIGH);
+    delay(1000);
+    digitalWrite(13,LOW);
+    delay(2000);
+    digitalWrite(12,HIGH);
+    delay(1000);
+    digitalWrite(12,LOW);
+    delay(2000);
+    digitalWrite(11,HIGH);
+    delay(1000);
+    digitalWrite(11,LOW);
+    delay(2000);
+  }
+}
+  }
+  
+
+
+  /*
+  digitalWrite(13,HIGH);
+  delay(1000);
+  digitalWrite(13,LOW);
+  delay(2000);
+  */
+  
+}
