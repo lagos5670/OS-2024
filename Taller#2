@@ -1,0 +1,54 @@
+##############################################################
+################### TALLER 2 #################################
+##############################################################
+
+int led = 5;
+int ntc = 0;
+int motor=10;
+int medida=0;
+int nivel=300; //variable que guarda el limite de temperatura
+
+
+void setup()
+{
+  pinMode(led, OUTPUT);
+  pinMode(motor, OUTPUT);
+  Serial.begin(9600);
+}
+
+
+void loop()
+{
+  medida=analogRead(A0);
+  Serial.print("sensorValue: ");
+  Serial.print(medida);
+  
+  nivel = (medida * (500.0/1023.0))-50.0;
+  Serial.print("temperatura oC: ");
+  Serial.println(nivel);
+  
+    // Validación 1: Temperatura inferior a 5 °C
+  if (nivel < 5) {
+    // Accionar el LED en intermitencia con un retardo de 0.5 segundos
+    digitalWrite(led, HIGH);
+    delay(0.5);
+    digitalWrite(led, LOW);
+    digitalWrite(motor, LOW);
+    delay(0.5);
+  }
+  // Validación 2: Temperatura entre 6 °C y 25 °C
+  else if (nivel >= 6 && nivel <= 25) {
+    // Apagar el LED
+    digitalWrite(led, LOW);
+    digitalWrite(motor, LOW);
+  }
+  // Validación 3: Temperatura mayor a 25 °C
+  else {
+    // Encender el LED y el ventilador
+    digitalWrite(led, HIGH);
+    digitalWrite(motor, HIGH);
+  }
+  
+  delay(500);
+ 
+}
