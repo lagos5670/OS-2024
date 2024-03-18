@@ -1,0 +1,70 @@
+#################################################
+############### TALLER 3 ########################
+#################################################
+
+#include <LiquidCrystal.h>
+
+
+int led = 13;
+int ntc = 0;
+int motor=10;
+int medida=0;
+int nivel=300; //variable que guarda el limite de temperatura
+int seconds = 0;
+
+LiquidCrystal lcd_1(12, 11, 5, 4, 3, 2);
+
+void setup()
+{
+  lcd_1.begin(16, 2); // Set up the number of columns and rows on the LCD.
+
+  // Print a message to the LCD.
+  lcd_1.print("Temperature:");
+}
+
+void loop()
+{
+  
+  medida=analogRead(A0);
+  Serial.print("sensorValue: ");
+  Serial.print(medida);
+  
+  nivel = (medida * (500.0/1023.0))-50.0;
+  Serial.print("temperatura oC: ");
+  Serial.println(nivel);
+  
+    // Validación 1: Temperatura inferior a 5 °C
+  if (nivel <= 10) {
+    // Accionar el LED en intermitencia con un retardo de 0.5 segundos
+    digitalWrite(led, HIGH);
+    digitalWrite(motor, LOW);
+    delay(0.5);
+    digitalWrite(led, LOW);
+    digitalWrite(motor, LOW);
+    delay(0.5);
+  }
+  // Validación 2: Temperatura entre 6 °C y 25 °C
+  else if (nivel >= 11 && nivel < 26) {
+    // Apagar el LED
+    digitalWrite(led, LOW);
+    digitalWrite(motor, LOW);
+  }
+  // Validación 3: Temperatura mayor a 25 °C
+  else {
+    // Encender el LED y el ventilador
+    digitalWrite(led, HIGH);
+    digitalWrite(motor, HIGH);
+  }
+  
+  delay(500);
+  
+  
+  // set the cursor to column 0, line 1
+  // (note: line 1 is the second row, since counting
+  // begins with 0):
+  lcd_1.setCursor(0, 1);
+  // print the number of temperature since reset:
+  lcd_1.print(nivel);
+  delay(1000); // Wait for 1000 millisecond(s)
+  seconds += 1;
+}
